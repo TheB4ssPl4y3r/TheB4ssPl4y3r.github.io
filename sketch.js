@@ -1,5 +1,6 @@
 let winWidth = 400;
 let winHeight = 300;
+
 function setup() {
   // Create the canvas (adjust width and height as needed)
   let canvas = createCanvas(winWidth, winHeight);
@@ -15,17 +16,19 @@ function setup() {
   // Create the score container
   let scoreContainer = createDiv("Score: ");
   scoreContainer.id("score-container");
-
-  //Create the score element in paragraph
   let scoreSpan = createP("0");
   scoreSpan.id("score");
 
   // Create the Game Boy text
   let gameBoyText = createDiv("GameBoy");
   gameBoyText.id("game-boy-text");
-
-  //Add color to the gameboy text
-  gameBoyText.style("color", "rgb(25 203 239 / 100%)");
+  // Add styles
+  gameBoyText.style("margin", "10px 145px");
+  gameBoyText.style("font-size", "25px");
+  gameBoyText.style("color", "white");
+  gameBoyText.style("background-color", "#0077b6");
+  gameBoyText.style("padding", "5px");
+  gameBoyText.style("border-radius", "5px");
 
   // Create the button container
   let buttonContainer = createDiv();
@@ -35,32 +38,97 @@ function setup() {
   let arrowButtons = createDiv();
   arrowButtons.id("arrow-buttons");
 
-  // Create the left and right buttons container
-  let leftRightButtons = createDiv();
-  leftRightButtons.id("leftRightButton");
+  // Create an up button
+  let upButton = createButton("▲");
+  // Set its ID
+  upButton.id("up");
+  // Set its styles
+  upButton.style("color", "white");
+  upButton.style("background-color", "red");
+  upButton.style("width", "40px");
+  upButton.style("height", "40px");
+  upButton.style("margin-bottom", "10px");
+  upButton.style("border-radius", "5px");
+  arrowButtons.child(upButton);
+
+  // Create the container for the left and right buttons
+  let leftRightContainer = createDiv();
+  arrowButtons.child(leftRightContainer);
+
+  // Create the left button
+  let leftButton = createButton("◀");
+  // Set its ID
+  leftButton.id("left");
+  // Set its styles
+  leftButton.style("color", "white");
+  leftButton.style("background-color", "red");
+  leftButton.style("width", "40px");
+  leftButton.style("height", "40px");
+  leftButton.style("margin-right", "30px");
+  leftButton.style("border-radius", "5px");
+  // Add it to the leftRightContainer
+  leftRightContainer.child(leftButton);
+
+  // Create the right button
+  let rightButton = createButton("▶");
+  // Set its ID
+  rightButton.id("right");
+  // Set its styles
+  rightButton.style("color", "white");
+  rightButton.style("background-color", "red");
+  rightButton.style("width", "40px");
+  rightButton.style("height", "40px");
+  rightButton.style("margin-left", "5px");
+  rightButton.style("border-radius", "5px");
+  // Add it to the leftRightContainer
+  leftRightContainer.child(rightButton);
+
+  // Create the down button
+  let downButton = createButton("▼");
+  // Set its ID
+  downButton.id("down");
+  // Set its styles
+  downButton.style("color", "white");
+  downButton.style("background-color", "red");
+  downButton.style("width", "40px");
+  downButton.style("height", "40px");
+  downButton.style("margin-top", "10px");
+  downButton.style("border-radius", "5px");
+  arrowButtons.child(downButton);
 
   // Create the action buttons container
   let actionButtons = createDiv();
   actionButtons.id("action-buttons");
 
-  // Select the page's body element and
-  // Return it wrapped in a p5.Element
-  let body = select("body");
+  // Create the play button
+  let playButton = createButton("▶");
+  // Set its ID
+  playButton.id("play");
+  // Set its styles
+  playButton.style("background-color", "blue");
+  playButton.style("color", "white");
+  playButton.style("width", "60px");
+  playButton.style("height", "60px");
+  playButton.style("font-size", "24px");
+  // Make it a circle
+  playButton.style("border-radius", "50%");
+  // Add spacing
+  playButton.style("margin-right", "10px");
+  actionButtons.child(playButton);
 
-  // Add the gameboyEmulator to the body element
-  body.child(gameBoyEmulator);
-
-  // Add containers to the main container
-  gameBoyEmulator.child(gameContainer);
-  gameBoyEmulator.child(gameBoyText);
-  gameBoyEmulator.child(buttonContainer);
-
-  // Add elements to their respective containers
-  scoreContainer.child(scoreSpan);
-  gameContainer.child(scoreContainer);
-  gameContainer.child(canvas);
-  buttonContainer.child(arrowButtons);
-  buttonContainer.child(actionButtons);
+  // Create the pause button
+  let pauseButton = createButton("❚❚");
+  // Set its ID
+  pauseButton.id("pause");
+  // Set its styles
+  pauseButton.style("background-color", "blue");
+  pauseButton.style("color", "white");
+  pauseButton.style("width", "60px");
+  pauseButton.style("height", "60px");
+  pauseButton.style("font-size", "24px");
+  // Make it a circle
+  pauseButton.style("border-radius", "50%");
+  actionButtons.child(pauseButton);
 
   // Set styles for the Game Boy emulator container
   gameBoyEmulator.style("background-color", "#8b8b8b");
@@ -88,16 +156,30 @@ function setup() {
   scoreContainer.style("position", "absolute");
   scoreContainer.style("margin-left", "340px");
   scoreContainer.style("color", "#fff");
-  scoreContainer.style("margin-top", "5px");
+  scoreContainer.style("margin-top", "30px");
+  
+  scoreSpan.style("position", "absolute");
+  scoreSpan.style("margin-left", "320px");
+  scoreSpan.style("color", "#fff");
+  scoreSpan.style("margin-top", "70px");
 
-  // Add styles
-  gameBoyText.style("margin", "10px 145px");
-  gameBoyText.style("font-size", "25px");
-  gameBoyText.style("color", "#fff");
-  gameBoyText.style("background-color", "#2A9CB9");
-  gameBoyText.style("padding", "5px");
-  gameBoyText.style("border-radius", "5px");
+  // Add elements to their respective containers
+  gameContainer.child(canvas);
+  buttonContainer.child(arrowButtons);
+  buttonContainer.child(actionButtons);
+
+  // Add containers to the main container
+  gameBoyEmulator.child(gameContainer);
+  gameBoyEmulator.child(gameBoyText);
+  gameBoyEmulator.child(buttonContainer);
+
+  // Add the gameBoyEmulator to the sketch
+  let body = select("body");
+  // Add emulator as the first child
+  // element in the page's body.
+  body.child(gameBoyEmulator);
 }
+
 function draw() {
   background(51);
 }
